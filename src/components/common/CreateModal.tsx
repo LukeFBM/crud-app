@@ -68,7 +68,7 @@ const CreateModal = ({ user }: CreateModalProps) => {
   return (
     <Dialog>
       <DialogTrigger
-        className="bg-violet-600 w-full p-0 m-0"
+        className="w-full p-0 m-0"
         onClick={() => setFormIsClosed(true)}
       >
         Create new user

@@ -44,9 +44,9 @@ const UsersList = () => {
 
   return (
     <>
-      <Table className="ml-4">
+      <Table className="m-2">
         <TableHeader>
-          <TableRow>
+          <TableRow className="hover:bg-white">
             <TableHead className="font-mono text-violet-600">User Id</TableHead>
             <TableHead className="font-mono text-violet-600">
               Username
@@ -96,7 +96,7 @@ const UsersList = () => {
         {pages.map((page) => {
           return (
             <Button
-              className="bg-violet-800"
+              className="bg-gray-800"
               onClick={() => handleSelectPage(page)}
             >
               {page}
