@@ -14,9 +14,7 @@ import { apiBaseUrl } from "@/lib/utils";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/components/ui/use-toast";
 import axios from "axios";
-import { useState } from "react";
-import { Button } from "../ui/button";
-import { Link } from "react-router-dom";
+import { CiTrash } from "react-icons/ci";
 
 type DeleteModalProps = {
   user?: User;
@@ -50,7 +48,9 @@ const DeleteModal = ({ user, onSubmit }: DeleteModalProps) => {
 
   return (
     <AlertDialog>
-      <AlertDialogTrigger>Delete</AlertDialogTrigger>
+      <AlertDialogTrigger>
+        <CiTrash className="text-2xl hover:text-violet-600 transition-all duration-300" />
+      </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
@@ -60,9 +60,15 @@ const DeleteModal = ({ user, onSubmit }: DeleteModalProps) => {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction type="submit" onClick={handleDeleteUser}>
-            Test Delete
+          <AlertDialogCancel className="hover:bg-black hover:text-white">
+            Cancel
+          </AlertDialogCancel>
+          <AlertDialogAction
+            className="bg-destructive hover:bg-black"
+            type="submit"
+            onClick={handleDeleteUser}
+          >
+            Delete permanently
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

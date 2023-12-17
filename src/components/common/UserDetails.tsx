@@ -38,13 +38,15 @@ const UserDetails = () => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{data?.email}</CardTitle>
-        <CardDescription>ID: {data?.userId}</CardDescription>
+        <CardTitle className="text-primary font-mono">{data?.email}</CardTitle>
+        <CardDescription className="font-primary">
+          ID: {data?.userId}
+        </CardDescription>
       </CardHeader>
       <CardContent>
-        <p>Email: {data?.email}</p>
-        <p>Username: {data?.username}</p>
-        <p>Passowrd: {data?.password}</p>
+        <p className="font-primary">Email: {data?.email}</p>
+        <p className="font-primary">Username: {data?.username}</p>
+        <p className="font-primary">Passowrd: {data?.password}</p>
       </CardContent>
       <CardFooter className="flex justify-end gap-4">
         <UpdateModal user={data} />

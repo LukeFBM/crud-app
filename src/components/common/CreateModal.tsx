@@ -1,3 +1,4 @@
+import { User } from "@/lib/types";
 import {
   Dialog,
   DialogContent,
@@ -6,54 +7,51 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { User } from "@/lib/types";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { useState } from "react";
+import axios from "axios";
 import { apiBaseUrl } from "@/lib/utils";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { Button } from "../ui/button";
-import { Input } from "@/components/ui/input";
-import { useState } from "react";
-import { useToast } from "@/components/ui/use-toast";
-import { CiEdit } from "react-icons/ci";
+import { toast } from "../ui/use-toast";
 
-type UpdateModalProps = {
+type CreateModalProps = {
   user?: User;
 };
 
-const updateUser = async (id: string, body: any) => {
-  const res = await axios.put(`${apiBaseUrl}/users/${id}`, body);
+const createUser = async (id: string, body: any) => {
+  const res = await axios.post(`${apiBaseUrl}/users/${id}`, body);
+  console.log(res.data);
   return res.data;
 };
 
-const UpdateModal = ({ user }: UpdateModalProps) => {
+const CreateModal = ({ user }: CreateModalProps) => {
   const queryClient = useQueryClient();
-  const { mutateAsync: update } = useMutation<any, any, any>({
-    mutationFn: (body) => updateUser(user?.userId ?? "", body),
+  const { mutateAsync: create } = useMutation<any, any, any>({
+    mutationFn: (body) => createUser(user?.userId ?? "", body),
     onSuccess: () => {
       // Invalidate and refetch
       queryClient.invalidateQueries({ queryKey: ["users", user?.userId] });
     },
   });
 
-  const { toast } = useToast();
-
-  const handleUpdateUser = () => {
-    update({
+  const handleCreateUser = () => {
+    create({
       email: emailInputValue,
       username: usernameInputValue,
       password: passwordInputValue,
     });
     toast({
-      title: "User Updated Successfully",
+      title: "User Created Successfully",
     });
   };
 
   const { register, handleSubmit } = useForm<User>({
     defaultValues: {
-      username: user?.username,
-      email: user?.email,
-      password: user?.password,
+      username: "",
+      email: "",
+      password: "",
     },
   });
 
@@ -69,13 +67,17 @@ const UpdateModal = ({ user }: UpdateModalProps) => {
 
   return (
     <Dialog>
-      <DialogTrigger onClick={() => setFormIsClosed(true)}>
-        <CiEdit className="text-2xl hover:text-violet-600 transition-all duration-300" />
+      <DialogTrigger
+        className="bg-violet-600 w-full p-0 m-0"
+        onClick={() => setFormIsClosed(true)}
+      >
+        Create new user
       </DialogTrigger>
+
       {formIsClosed ? (
         <DialogContent>
           <DialogHeader>
-            <DialogTitle className="">Update</DialogTitle>
+            <DialogTitle className="">Create new User</DialogTitle>
             <DialogDescription>
               <form
                 className="flex flex-col gap-4"
@@ -100,8 +102,12 @@ const UpdateModal = ({ user }: UpdateModalProps) => {
                   onChange={(e) => setPasswordInputValue(e.target.value)}
                 />
 
-                <Button type="submit" onClick={handleUpdateUser}>
-                  Test Update
+                <Button
+                  type="submit"
+                  className="bg-violet-600"
+                  onClick={handleCreateUser}
+                >
+                  Create
                 </Button>
               </form>
             </DialogDescription>
@@ -112,4 +118,4 @@ const UpdateModal = ({ user }: UpdateModalProps) => {
   );
 };
 
-export default UpdateModal;
+export default CreateModal;
