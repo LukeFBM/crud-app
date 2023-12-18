@@ -50,7 +50,7 @@ const UserDetails = () => {
       </CardContent>
       <CardFooter className="flex justify-end gap-4">
         <UpdateModal user={data} />
-        <DeleteModal user={data} onSubmit={() => setUserIsDeleted(true)} />
+        <DeleteModal user={data} />
       </CardFooter>
     </Card>
   );

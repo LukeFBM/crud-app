@@ -18,7 +18,6 @@ import { CiTrash } from "react-icons/ci";
 
 type DeleteModalProps = {
   user?: User;
-  onSubmit: () => void;
 };
 
 const deleteUser = async (id: string) => {
@@ -26,7 +25,7 @@ const deleteUser = async (id: string) => {
   return res.data;
 };
 
-const DeleteModal = ({ user, onSubmit }: DeleteModalProps) => {
+const DeleteModal = ({ user }: DeleteModalProps) => {
   const queryClient = useQueryClient();
   const { mutateAsync: cancel } = useMutation<any, any, any>({
     mutationFn: () => deleteUser(user?.userId ?? ""),
@@ -43,8 +42,9 @@ const DeleteModal = ({ user, onSubmit }: DeleteModalProps) => {
     toast({
       title: "User Deleted Successfully",
     });
-    onSubmit();
   };
+
+  console.log(user);
 
   return (
     <AlertDialog>

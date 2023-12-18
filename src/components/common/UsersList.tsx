@@ -24,7 +24,6 @@ const getUsers = async (currentPage: any) => {
 
 const UsersList = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [userIsDeleted, setUserIsDeleted] = useState(false);
   const [selected, setSelected] = useState(false);
   const { data, isLoading } = useQuery({
     queryKey: ["users", currentPage],
@@ -40,7 +39,6 @@ const UsersList = () => {
   const pages = Array.from({ length: 20 }, (_, i) => i + 1);
 
   if (isLoading) return <p>Loading...</p>;
-  if (userIsDeleted) return <UsersList />;
 
   return (
     <>
@@ -78,13 +76,10 @@ const UsersList = () => {
                       <IoEyeOutline className="text-xl hover:text-violet-600 transition-all duration-300" />
                     </Link>
                     <button>
-                      <UpdateModal user={data} />
+                      <UpdateModal user={user} />
                     </button>
 
-                    <DeleteModal
-                      user={data}
-                      onSubmit={() => setUserIsDeleted(true)}
-                    />
+                    <DeleteModal user={user} />
                   </div>
                 </TableCell>
               </TableRow>
