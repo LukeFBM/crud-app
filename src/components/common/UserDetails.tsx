@@ -15,6 +15,7 @@ import DeleteModal from "./DeleteModal";
 import UpdateModal from "./UpdateModal";
 import { useState } from "react";
 import UsersList from "./UsersList";
+import Loading from "./Loading";
 
 const getUser = async (id: string) => {
   const res = await axios.get(`${apiBaseUrl}/users/${id}`);
@@ -32,7 +33,7 @@ const UserDetails = () => {
   });
   console.log(data);
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <Loading />;
   if (userIsDeleted) return <UsersList />;
 
   return (

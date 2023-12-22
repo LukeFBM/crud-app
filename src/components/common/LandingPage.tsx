@@ -1,6 +1,11 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import Loading from "./Loading";
 
 const LandingPage = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  if (isLoading) return <Loading />;
   return (
     <div className="flex justify-center mt-5">
       <div className="flex flex-col gap-10">

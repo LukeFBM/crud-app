@@ -16,6 +16,7 @@ import { useState } from "react";
 import UpdateModal from "./UpdateModal";
 import DeleteModal from "./DeleteModal";
 import CreateModal from "./CreateModal";
+import Loading from "./Loading";
 
 const getUsers = async (currentPage: any) => {
   const res = await axios.get(`${apiBaseUrl}/users?&page=${currentPage}`);
@@ -24,7 +25,6 @@ const getUsers = async (currentPage: any) => {
 
 const UsersList = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [selected, setSelected] = useState(false);
   const { data, isLoading } = useQuery({
     queryKey: ["users", currentPage],
     queryFn: () => getUsers(currentPage),
@@ -32,13 +32,12 @@ const UsersList = () => {
   console.log(data);
 
   const handleSelectPage = (page: number) => {
-    setSelected(!selected);
     setCurrentPage(page);
   };
 
   const pages = Array.from({ length: 20 }, (_, i) => i + 1);
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <Loading />;
 
   return (
     <>
